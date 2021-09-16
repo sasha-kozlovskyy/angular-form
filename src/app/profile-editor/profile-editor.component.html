@@ -1,0 +1,40 @@
+<form [formGroup]="profileForm">
+  <label for="first-name">First Name: </label>
+  <input id="first-name" type="text" formControlName="firstName" required>
+
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+  <label for="picker">Choose a date</label>
+  <input matInput [matDatepicker]="picker" formControlName="birthday" required>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <label for="framework">Choose a framework</label>
+  <select name="framework" id="framework" value="">
+    <option *ngFor="let framework of frameworks" [value]="framework">
+      {{ framework }}
+    </option>
+  </select>
+  <label for="email">Email: </label>
+  <input id="email" type="email" formControlName="email" required>
+  <div formArrayName="hobbies">
+    <h2>Hobbies</h2>
+    <button (click)="addHobbie()">+ Add another hobbie</button>
+
+    <div *ngFor="let hobbie of hobbies.controls; let i=index">
+      <!-- The repeated alias template -->
+      <label for="hobbie-{{ i }}">Hobbie:</label>
+      <input id="hobbie-{{ i }}" type="text" [formControlName]="i" required>
+    </div>
+  </div>
+
+
+  <p>Complete the form to enable button.</p>
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>
+
+<hr>
+
+<p>Form Value: {{ profileForm.value | json }}</p>
+
+<p>Form Status: {{ profileForm.status }}</p>
+
