@@ -1,30 +1,64 @@
 <form [formGroup]="profileForm">
-  <label for="first-name">First Name: </label>
+  <label for="first-name">First Name</label>
   <input id="first-name" type="text" formControlName="firstName" required>
 
-  <label for="last-name">Last Name: </label>
+  <label for="last-name">Last Name</label>
   <input id="last-name" type="text" formControlName="lastName">
   <label for="picker">Choose a date</label>
   <input matInput [matDatepicker]="picker" formControlName="birthday" required>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
   <label for="framework">Choose a framework</label>
-  <select name="framework" id="framework" value="">
+  <select name="framework" id="framework" (change)='change($event)'>
+    <option value="Choose a framework" selected disabled>Choose a framework</option>
     <option *ngFor="let framework of frameworks" [value]="framework">
       {{ framework }}
     </option>
   </select>
-  <label for="email">Email: </label>
+  <div *ngIf="select==='Angular'">
+    <label for="angularVersions">Choose a version</label>
+    <select name="angularVersions" id="angularVersions" value="">
+      <option *ngFor="let version of angularVersions" [value]="version">
+        {{ version }}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="select==='React'">
+    <label for="reactVersions">Choose a version</label>
+    <select name="reactVersions" id="reactVersions" value="">
+      <option *ngFor="let version of reactVersions" [value]="version">
+        {{ version }}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="select==='Vue'">
+    <label for="vueVersions">Choose a version</label>
+    <select name="vueVersions" id="vueVersions" value="">
+      <option *ngFor="let version of vueVersions" [value]="version">
+        {{ version }}
+      </option>
+    </select>
+  </div>
+  <label for="email">Email</label>
   <input id="email" type="email" formControlName="email" required>
+  <!-- <div *ngIf="email.invalid && (email.dirty || email.touched)">
+    <div *ngIf="email.errors?.required">
+      email is required.
+    </div>
+    <div *ngIf="email.errors?.email">
+      Incorrect email
+    </div>
+    <div *ngIf="email.errors?.pattern">
+      Incorrect email
+    </div>
+</div> -->
   <div formArrayName="hobbies">
     <h2>Hobbies</h2>
-    <button (click)="addHobbie()">+ Add another hobbie</button>
-
     <div *ngFor="let hobbie of hobbies.controls; let i=index">
-      <!-- The repeated alias template -->
-      <label for="hobbie-{{ i }}">Hobbie:</label>
+      <label for="hobbie-{{ i }}">Hobby:</label>
       <input id="hobbie-{{ i }}" type="text" [formControlName]="i" required>
     </div>
+    <button (click)="addHobbie()">+ Add another hobbie</button>
   </div>
 
 
