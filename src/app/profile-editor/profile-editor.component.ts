@@ -9,7 +9,7 @@ import { FormBuilder,  FormArray, Validators, FormControl } from '@angular/forms
 export class ProfileEditorComponent {
   profileForm = this.fb.group({
     firstName: ['', Validators.required],
-    lastName: [''],
+    lastName: ['', Validators.required],
     birthday: ['', Validators.required],
     email: new FormControl('', Validators.compose([
       Validators.email,
